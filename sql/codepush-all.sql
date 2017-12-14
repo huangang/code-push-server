@@ -3,6 +3,7 @@ CREATE TABLE `apps` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
   `uid` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `type` varchar(30) NOT NULL DEFAULT 'ios',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -170,5 +171,5 @@ CREATE TABLE `versions` (
 LOCK TABLES `versions` WRITE;
 INSERT INTO `versions` (`id`, `type`, `version`)
 VALUES
-	(1,1,'0.2.15');
+	(1,1,'0.3.0');
 UNLOCK TABLES;
