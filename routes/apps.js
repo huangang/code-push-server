@@ -272,7 +272,7 @@ router.post('/:appName/deployments/:deploymentName/release',
   .then((col) => {
     var pubType = '';
     log.debug(`check publish type`);
-    if (col.type === 'android' || col.type === 'ios') {
+    if (col.dataValues.type === 'android' || col.dataValues.type === 'ios') {
       pubType = col.type
     } else {
       log.debug(`you have to add app type, eg. android ios`);
@@ -316,7 +316,7 @@ router.post('/:appName/deployments/:deploymentName/release',
     });
   })
   .then((data) => {
-    res.send("");
+    res.send({"message": "ok"});
   })
   .catch((e) => {
     if (e instanceof AppError.AppError) {

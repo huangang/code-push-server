@@ -13,7 +13,6 @@ module.exports = function(sequelize, DataTypes) {
     roles : DataTypes.STRING,
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
-    type: DataTypes.STRING,
   }, {
     tableName: 'collaborators',
     underscored: true,
