@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: DataTypes.STRING,
     uid: DataTypes.BIGINT(20),
+    type: DataTypes.STRING,
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
   }, {

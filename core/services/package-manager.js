@@ -279,6 +279,7 @@ proto.createDiffPackages = function (originalPackage, destPackages) {
 proto.releasePackage = function (deploymentId, packageInfo, fileType, filePath, releaseUid, pubType) {
   var self = this;
   var appVersion = packageInfo.appVersion;
+  log.info(packageInfo);
   if (!/^([0-9.]+)$/.test(appVersion)) {
     log.debug(`releasePackage targetBinaryVersion ${appVersion} not support.`);
     return Promise.reject(new AppError.AppError(`targetBinaryVersion ${appVersion} not support.`))

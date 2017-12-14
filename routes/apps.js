@@ -272,13 +272,11 @@ router.post('/:appName/deployments/:deploymentName/release',
   .then((col) => {
     var pubType = '';
     log.debug(`check publish type`);
-    if (REGEX_ANDROID.test(appName)) {
-      pubType = 'android';
-    } else if (REGEX_IOS.test(appName)) {
-      pubType = 'ios';
+    if (col.type === 'android' || col.type === 'ios') {
+      pubType = col.type
     } else {
-      log.debug(`you have to rename app name, eg. Demo-android Demo-ios`);
-      throw new AppError.AppError(`you have to rename app name, eg. Demo-android Demo-ios`);
+      log.debug(`you have to add app type, eg. android ios`);
+      throw new AppError.AppError(`you have to add app type, eg. android ios`);
     }
     log.debug(`publish type is ${pubType}`);
     return deployments.findDeloymentByName(deploymentName, col.appid)
