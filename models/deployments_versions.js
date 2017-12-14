@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     deployment_id: DataTypes.INTEGER(10),
     app_version: DataTypes.STRING,
+    num_version: DataTypes.INTEGER(10),
     current_package_id: DataTypes.INTEGER(10),
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,

@@ -51,8 +51,17 @@ proto.parseReqFile = function (req) {
 };
 
 proto.createDeploymentsVersionIfNotExist = function (deploymentId, appVersion, t) {
+  var numVersionStr = appVersion;
+  if(appVersion.charAt(0) === '^'){
+    numVersionStr = appVersion.replace('^', 0);
+  }
+  var numVersionArr = numVersionStr.split('.');
+  var numVersion = 0;
+  numVersionArr.forEach(function (num, index) {
+    numVersion += num * Math.pow(10, 6 - 3 * index);
+  });
   return models.DeploymentsVersions.findOrCreate({
-    where: {deployment_id: deploymentId, app_version: appVersion},
+    where: {deployment_id: deploymentId, app_version: appVersion, num_version: numVersion},
     defaults: {current_package_id: 0},
     transaction: t
   })
@@ -279,8 +288,12 @@ proto.createDiffPackages = function (originalPackage, destPackages) {
 proto.releasePackage = function (deploymentId, packageInfo, fileType, filePath, releaseUid, pubType) {
   var self = this;
   var appVersion = packageInfo.appVersion;
+  var checkVersion = appVersion;
   log.info(packageInfo);
-  if (!/^([0-9.]+)$/.test(appVersion)) {
+  if(appVersion.charAt(0) === '^'){
+    checkVersion = appVersion.replace('^', 0);
+  }
+  if (!/^([0-9.]+)$/.test(checkVersion)) {
     log.debug(`releasePackage targetBinaryVersion ${appVersion} not support.`);
     // 第一次检测 targetBinaryVersion
     return Promise.reject(new AppError.AppError(`targetBinaryVersion ${appVersion} not support.`))
@@ -378,7 +391,11 @@ proto.modifyReleasePackage = function(deploymentId, deploymentVersionId, package
       throw new AppError.AppError(`--disabled -x function is not implements`);
     }
     if (!appVersion) {
-      if (!/^([0-9.]+)$/.test(appVersion)) {
+      var checkVersion = appVersion;
+      if(appVersion.charAt(0) === '^'){
+        checkVersion = appVersion.replace('^', 0);
+      }
+      if (!/^([0-9.]+)$/.test(checkVersion)) {
         return Promise.reject(new AppError.AppError(`targetBinaryVersion ${appVersion} not support.`))
       }
       return models.DeploymentsVersions.findOne({deployment_id: deploymentId, app_version: appVersion})
