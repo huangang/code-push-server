@@ -282,6 +282,7 @@ proto.releasePackage = function (deploymentId, packageInfo, fileType, filePath, 
   log.info(packageInfo);
   if (!/^([0-9.]+)$/.test(appVersion)) {
     log.debug(`releasePackage targetBinaryVersion ${appVersion} not support.`);
+    // 第一次检测 targetBinaryVersion
     return Promise.reject(new AppError.AppError(`targetBinaryVersion ${appVersion} not support.`))
   }
   var description = packageInfo.description;

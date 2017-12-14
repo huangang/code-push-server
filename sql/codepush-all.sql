@@ -60,6 +60,7 @@ CREATE TABLE `deployments_versions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `deployment_id` int(11) unsigned NOT NULL DEFAULT '0',
   `app_version` varchar(14) NOT NULL DEFAULT '',
+  `num_version` int(10) unsigned NOT NULL DEFAULT '0',
   `current_package_id` int(10) unsigned NOT NULL DEFAULT '0',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NULL DEFAULT NULL,
